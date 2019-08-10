@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/master :: master-layout}">
+<head>
+</head>
+<body>
+<!-- Content Wrapper. Contains page content -->
+<div layout:fragment="main-content" id="main-content" class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-users"></i> <span th:text="${pageTitle}"></span>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a th:href="@{${pageLinks.siteRoot}}"><i class="fa fa-home"></i>
+                Home</a></li>
+            <li class="active" th:text="${pageTitle}"></li>
+        </ol>
+
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <a style="margin: 10px" th:href="@{${pageLinks.registerCitizen}}"
+                   class="btn btn-warning">Register A Citizen</a>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-body table-responsive">
+                        <table id="tblRecords"
+                               class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>SSN</th>
+                                <th>First Name</th>
+                                <th>Middle Name</th>
+                                <th>Last Name</th>
+                                <th>Date of Birth</th>
+                                <th>Yearly Income</th>
+                                <th>State of Origin</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="citizen : ${citizens}">
+                                <td class="mailbox-name" th:text="${citizen.socialSecurityNumber}"></td>
+                                <td class="mailbox-name" th:text="${citizen.firstName}"></td>
+                                <td class="mailbox-name" th:text="${citizen.middleName}"></td>
+                                <td class="mailbox-name" th:text="${citizen.lastName}"></td>
+                                <td class="mailbox-name" th:text="${citizen.dateOfBirth}"></td>
+                                <td class="mailbox-name" th:text="${citizen.yearlyIncomeAsMoney}"></td>
+                                <td class="mailbox-name"
+                                    th:text="${citizen.state.stateName}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn-group" style="float: right;margin: 8px;">
+                            <button type="button" class="btn btn-default">Pages:</button>
+                            <a type="button" th:each="i : ${#numbers.sequence(1, citizens.totalPages)}"
+                               th:class="${currentPageNo}==${i-1}?'btn btn-primary':'btn btn-default'"
+                               th:href="@{${pageLinks.viewCitizens}(page=${i-1})}"
+                               th:text="${i}">
+                            </a>
+                        </div>
+                        <hr>
+                        <h3>Total National Yearly Income: <span th:text="${totalNationalYearlyIncome}"></span></h3>
+                    </div>
+
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+</body>
+</html>
